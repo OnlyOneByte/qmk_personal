@@ -1,3 +1,19 @@
+# What is this fork?
+
+This is my personalized fork of QMK that includes some stupid stuff like:
+- My own Sofle V1 QMK Software
+- A really funny hack of using a Sofle V1 PCB with Pi Picos, based on JellyTitan's QMK for the Sofle Pico
+- Misc
+
+My Folders:
+- sofle_v1_pico
+- sofle (onlyonebyte KM)
+- lck75 (onlyonebyte KM)
+
+--- 
+
+Back to the normal QMK Readme
+
 # Quantum Mechanical Keyboard Firmware
 
 [![Current Version](https://img.shields.io/github/tag/qmk/qmk_firmware.svg)](https://github.com/qmk/qmk_firmware/tags)
