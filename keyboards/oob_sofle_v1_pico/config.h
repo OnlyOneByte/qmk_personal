@@ -6,10 +6,13 @@
 /* Split Keyboard Stuff */
 #define EE_HANDS
 /* Use full duplex communication (TRRS) */
-#define SERIAL_USART_FULL_DUPLEX 
-#define SERIAL_USART_TX_PIN GP16
+#define SERIAL_USART_FULL_DUPLEX
+
+// My dumbass burned out GP16 unplugging the TRRS cable while keyboard was powered. Do do what I did.
+// I jumped GP16 to 18 so I'm now using 17/18, but if anyone else does this, use 16/17 cause its neater.
+// #define SERIAL_USART_TX_PIN GP16
+#define SERIAL_USART_TX_PIN GP18
 #define SERIAL_USART_RX_PIN GP17
-/* Swap TX and RX pins if keyboard is master half. Only available on some MCU's. This _is_ available on the RP2040 */
 #define SERIAL_USART_PIN_SWAP
 
 /* I2C for OLEDs */
