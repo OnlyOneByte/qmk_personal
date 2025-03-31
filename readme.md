@@ -5,10 +5,10 @@ This is my personalized fork of QMK that includes some stupid stuff like:
 - A really funny hack of using a Sofle V1 PCB with Pi Picos, based on JellyTitan's QMK for the Sofle Pico
 - Misc
 
-My Folders:
-- sofle_v1_pico
-- sofle (onlyonebyte KM)
-- lck75 (onlyonebyte KM)
+My Folders: (all prefixed with oob for easier file exlcudes)
+- oob_sofle_v1_pico
+- oob_sofle (onlyonebyte KM)
+- oob_lck75 (onlyonebyte KM)
 
 --- 
 
