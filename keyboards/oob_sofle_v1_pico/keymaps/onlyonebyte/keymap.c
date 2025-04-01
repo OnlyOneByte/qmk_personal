@@ -5,9 +5,9 @@
 #include QMK_KEYBOARD_H
 #include "oled_assets.c" // includes layers.h
 
-enum sofle_layers {
-    /* _M_XYZ = Mac Os, _W_XYZ = Win/Linux */
+enum custom_layers {
     _QWERTY,
+    _UWU,
     _LOWER,
     _RAISE,
     _ADJUST,
@@ -32,7 +32,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         *            |      |      |      |      |/       /         \      \ |      |      |      |      |
         *            `----------------------------------'           '------''---------------------------'
         */
-
         [_QWERTY] = LAYOUT(
         KC_GRV,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                   KC_6,    KC_7,    KC_8,    KC_9,    KC_0,  KC_DEL,
         KC_ESC,   KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,  KC_BSPC,
@@ -106,16 +105,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // clang-format on
 };
 
-
 #ifdef ENCODER_MAP_ENABLE
 const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
-    [_QWERTY] = {ENCODER_CCW_CW(KC_VOLD, KC_VOLU)}, 
-    [_LOWER] = {ENCODER_CCW_CW(KC_PGUP, KC_PGDN)},
-    [_RAISE] = {ENCODER_CCW_CW(_______, _______)},
-    [_ADJUST] = {ENCODER_CCW_CW(_______, _______)}
+    /* Left Hand */                             /* Right Hand */
+    /* Switch between tabs. (Control + Tab). */ /* Switch between open apps on Mac. (Command + Tab + timer logic) */
+    [_QWERTY] = {ENCODER_CCW_CW(S(C(KC_TAB)), C(KC_TAB)), ENCODER_CCW_CW(CMD_TAB_CW, CMD_TAB_CCW)},
+    /* Scrolls left & right. (Shift + Mouse Wheel Up). */ /* Scrolls up and down. (Page Down & Page Up - mouse wheel scroll increments are too small) */
+    [_LOWER] = {ENCODER_CCW_CW(S(KC_MS_WH_UP), S(KC_MS_WH_DOWN)), ENCODER_CCW_CW(KC_PGDN, KC_PGUP)},
+    /* Selects adjacent words. (Command + Shift + Right Arrow). */ /* Jumps to end/start of line. Hold shift to select. (Gui + arrow). */
+    [_RAISE] = {ENCODER_CCW_CW(C(S(KC_LEFT)), C(S(KC_RGHT))), ENCODER_CCW_CW(G(KC_LEFT), G(KC_RGHT))},
+    [_ADJUST] = {ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______)}
 };
 #endif
-
 
 #ifdef OLED_ENABLE
 
@@ -128,15 +129,6 @@ static void render_status(void) {
         oled_write_ln_P(PSTR("- MAC"), false);
     } else {
         oled_write_ln_P(PSTR("- WIN"), false);
-    }
-
-    // Base Layer
-    switch (get_highest_layer(default_layer_state)) {
-        case _QWERTY:
-            oled_write_ln_P(PSTR("- Qwerty"), false);
-            break;
-        default:
-            oled_write_P(PSTR("- Undefined"), false);
     }
 
     // Which Layer Currently
@@ -321,4 +313,3 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
     return true;
 }
-
