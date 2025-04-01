@@ -115,3 +115,7 @@ user_song_list.h
 compile_commands.json
 .clangd/
 .cache/
+
+
+# Personal
+keyboards/oob_sofle_reference/
