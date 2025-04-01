@@ -106,6 +106,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // clang-format on
 };
 
+
+#ifdef ENCODER_MAP_ENABLE
+const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
+    [_QWERTY] = {ENCODER_CCW_CW(KC_VOLD, KC_VOLU)}, 
+    [_LOWER] = {ENCODER_CCW_CW(KC_PGUP, KC_PGDN)},
+    [_RAISE] = {ENCODER_CCW_CW(_______, _______)},
+    [_ADJUST] = {ENCODER_CCW_CW(_______, _______)}
+};
+#endif
+
+
 #ifdef OLED_ENABLE
 
 static void render_status(void) {
@@ -156,16 +167,19 @@ uint16_t startup_timer;
 
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
     if (is_keyboard_left()) {
+        bongo_timer = timer_read32(); // Initialize the time
         return OLED_ROTATION_270;
     } else {
         return OLED_ROTATION_90;
     }
 }
 
+
+/** This function actually decides what is rendered */
 bool oled_task_user(void) {
     if (is_keyboard_master()) {
-        /* Renders the current keyboard state (layer, lock, caps, scroll, etc) */
         render_status();
+        render_bongo_cat();
     } else {
         render_logo();
     }
@@ -308,8 +322,3 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return true;
 }
 
-#ifdef ENCODER_MAP_ENABLE
-const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
-    [0] = {ENCODER_CCW_CW(KC_VOLD, KC_VOLU)}, [1] = {ENCODER_CCW_CW(KC_PGUP, KC_PGDN)}, [2] = {ENCODER_CCW_CW(_______, _______)}, [3] = {ENCODER_CCW_CW(_______, _______)}, [4] = {ENCODER_CCW_CW(_______, _______)},
-};
-#endif
