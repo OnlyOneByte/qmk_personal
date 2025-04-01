@@ -206,7 +206,7 @@ static bool     last_tapping_state = false;
 
 // --- Animation Parameters ---
 #define BONGO_TAP_ANIMATION_INTERVAL 100 // ms between tapping frames
-#define BONGO_IDLE_ANIMATION_INTERVAL 500 // ms between idle frames
+#define BONGO_IDLE_ANIMATION_INTERVAL 250 // ms between idle frames
 #define BONGO_WPM_THRESHOLD 20       // WPM threshold
 
 // --- Function to Draw Bongo Cat ---
