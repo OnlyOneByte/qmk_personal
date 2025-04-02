@@ -5,8 +5,8 @@ units:
   kx: u
   ky: u
   # Padding Variables
-  px: kx + 2.5
-  py: ky + 2.5
+  px: kx + 4
+  py: ky + 4
 points:
   zones:
     matrix:
@@ -62,10 +62,10 @@ points:
       rows:
         # Thumbs only have one row.
         cluster:
-  rotate: -15
+  rotate: -20
   mirror: &mirror
     ref: matrix_inner_num
-    distance: 4kx
+    distance: 3.5kx
 
 # Previews some stuff
 outlines:
@@ -109,6 +109,10 @@ outlines:
           shift: [-0.75px,-0.5py]
         - ref: matrix_outer_mod
           shift: [-0.5px,-0.5py]
+  combo_keys:
+    - name: board
+    - operation: subtract
+      name: keys
 
 cases:
   bottom:
