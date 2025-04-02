@@ -10,7 +10,7 @@ units:
   wall_thickness: 10
   wall_height: 10
   base_thickness: 2
-  plate_thickness: 4
+  plate_thickness: 5 # 5 is max
   plate_to_case_padding: 0.5
   mx_plate_pad: 0.05
   mx_plate_dimension: 14 + mx_plate_pad
