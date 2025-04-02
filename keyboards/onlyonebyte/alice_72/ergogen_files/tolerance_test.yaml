@@ -1,0 +1,113 @@
+# This is used to determine the spacing values
+units:
+  # Proxy Spacing Variables
+  kx: u
+  ky: u
+  # Padding Variables
+  px: kx + 4
+  py: ky + 4
+  # Case dimension variables
+  wall_thickness: 10
+  wall_height: 10
+  base_thickness: 2
+  plate_thickness: 4
+  plate_to_case_padding: 0.5
+  mx_plate_pad: 0.05
+  mx_plate_dimension: 14 + mx_plate_pad
+  dpx: kx + wall_thickness
+  dpy: ky + wall_thickness
+points:
+  zones:
+    matrix:
+      key:
+        padding: 1ky
+        spread: 1kx
+      columns:
+        col1:
+        col2:
+      rows:
+        row1:
+        row2:
+
+# Previews some stuff
+outlines:
+  raw:
+    - what: rectangle
+      where: true
+      size: [kx, ky]
+  keys:
+    - what: rectangle
+      where: true
+      size: [mx_plate_dimension,mx_plate_dimension]
+  board:
+    - what: polygon
+      operation: stack
+      points:
+        - ref: matrix_col1_row2
+          shift: [-0.5px,0.5py]
+        - ref: matrix_col2_row2
+          shift: [0.5px,0.5py]
+        - ref: matrix_col2_row1
+          shift: [0.5px,-0.5py]
+        - ref: matrix_col1_row1
+          shift: [-0.5px,-0.5py]
+
+  xboard:
+    - what: polygon
+      operation: stack
+      points:
+        - ref: matrix_col1_row2
+          shift: [-0.5dpx,0.5dpy]
+        - ref: matrix_col2_row2
+          shift: [0.5dpx,0.5dpy]
+        - ref: matrix_col2_row1
+          shift: [0.5dpx,-0.5dpy]
+        - ref: matrix_col1_row1
+          shift: [-0.5dpx,-0.5dpy]
+      fillet: 2
+
+  combo_keys:
+    - name: board
+    - operation: subtract
+      name: keys
+
+cases:
+  _xlBottom:
+    - name: xboard
+      extrude: base_thickness
+  _outerWall:
+    - name: xboard
+      extrude: wall_height + base_thickness
+  _innerWall:
+    - name: board
+      extrude: wall_height + base_thickness
+  _wall:
+    - what: case
+      name: _outerWall
+      operation: add
+    - what: case
+      name: _innerWall
+      operation: subtract
+
+  _plate_board:
+    - name: board
+      extrude: plate_thickness
+  _plate_cut:
+    - name: keys
+      extrude: plate_thickness
+
+  plate:
+    - what: case
+      name: _plate_board
+      operation: add
+    - what: case
+      name: _plate_cut
+      operation: subtract
+
+  case:
+    - what: case
+      name: _xlBottom
+      operation: add
+    - what: case
+      name: _wall
+      operation: add
