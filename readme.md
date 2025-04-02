@@ -5,6 +5,10 @@ This is my personalized fork of QMK that includes some stupid stuff like:
 - A really funny hack of using a Sofle V1 PCB with Pi Picos, based on JellyTitan's QMK for the Sofle Pico
 - Misc
 
+The other folders, aka folders for keyboards I don't own, were removed to increase git performance. The default folders are left in for my own programming reference, my actual implementations are all under the onlyonebyte folder.
+
+
+
 My keyboards are under onlyonebyte/<keyboard name>
 - sofle v1 (given away, no longer maintained)
   - generic red switches
