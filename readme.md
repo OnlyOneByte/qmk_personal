@@ -5,10 +5,22 @@ This is my personalized fork of QMK that includes some stupid stuff like:
 - A really funny hack of using a Sofle V1 PCB with Pi Picos, based on JellyTitan's QMK for the Sofle Pico
 - Misc
 
-My Folders: (all prefixed with oob for easier file exlcudes)
-- oob_sofle_v1_pico
-- oob_sofle (onlyonebyte KM)
-- oob_lck75 (onlyonebyte KM)
+My keyboards are under onlyonebyte/<keyboard name>
+- sofle v1 (given away, no longer maintained)
+  - generic red switches
+- sofle v1 with pico (use in office)
+   - glorious pandas
+- LCK 75 (office backup)
+   - limited edition magical girl switches
+- Keychron Q1:
+  - Use at home, boba U4T for me
+  - GF uses with JWK T1s
+  
+  
+honorable mention not on here:
+- RK M75 with Boba U4 switches
+
+
 
 --- 
 
