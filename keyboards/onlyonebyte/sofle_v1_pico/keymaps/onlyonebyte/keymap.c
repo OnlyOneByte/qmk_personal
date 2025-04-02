@@ -61,7 +61,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         ),
         /* RAISE
         * ,-----------------------------------------.                    ,-----------------------------------------.
-        * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
+        * |      |      |      |      |      |      |                    |      |      |      |      |  MINS| EQL  |
         * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
         * | Esc  | Ins  | Pscr | Menu |      |      |                    |      | PWrd |  Up  | NWrd | DLine| Del  |
         * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
@@ -74,7 +74,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         *            `----------------------------------'           '------''---------------------------'
         */
         [_RAISE] = LAYOUT(
-        _______, _______ , _______ , _______ , _______ , _______,                           _______,  _______  , _______,  _______ ,  _______ ,_______,
+        _______, _______ , _______ , _______ , _______ , _______,                           _______,  _______  , _______,  _______ ,  KC_MINS,KC_EQL,
         _______,  KC_INS,  KC_PSCR,   KC_APP,  XXXXXXX, XXXXXXX,                        KC_PGUP, KC_PRVWD,   KC_UP, KC_NXTWD,KC_DLINE, KC_DEL,
         _______, KC_LALT,  KC_LCTL,  KC_LSFT,  XXXXXXX, KC_CAPS,                       KC_PGDN,  KC_LEFT, KC_DOWN, KC_RGHT,  KC_DEL, KC_BSPC,
         _______,KC_UNDO, KC_CUT, KC_COPY, KC_PASTE, XXXXXXX,  _______,       _______,  XXXXXXX, KC_LSTRT, XXXXXXX, KC_LEND,   XXXXXXX, _______,
