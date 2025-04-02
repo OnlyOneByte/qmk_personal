@@ -230,7 +230,7 @@ cases:
       name: _innerWall
       operation: subtract
 
-  plate_board:
+  plate:
     - name: plate_view
       extrude: plate_thickness
 
