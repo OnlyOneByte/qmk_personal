@@ -3,18 +3,33 @@ units:
   # Proxy Spacing Variables
   kx: u
   ky: u
-  # Padding Variables
-  px: kx + 4
-  py: ky + 4
+
+  # Common
+  fillet_size: 5
+
   # Case dimension variables
-  wall_thickness: 10
+  edge_thickness: 4 # how much padding around the edge of the entire keyboard
+  wall_thickness: 8
   wall_height: 10
   base_thickness: 2
+
+  case_inner_x: 0.5kx + edge_thickness
+  case_inner_y: 0.5ky + edge_thickness
+
+  case_outer_x: 0.5kx + edge_thickness + wall_thickness
+  case_outer_y: 0.5ky + edge_thickness + wall_thickness
+
+  # Plate Dimensions
   plate_thickness: 5 # 5 is max
+  plate_to_case_pad: 1.5 # padding between the plate and the case
+
   mx_plate_pad: 0.05
   mx_plate_dimension: 14 + mx_plate_pad
-  dpx: kx + wall_thickness
-  dpy: ky + wall_thickness
+
+  plate_x: 0.5kx + edge_thickness - plate_to_case_pad
+  plate_y: 0.5kx + edge_thickness - plate_to_case_pad
+
+
 points:
   zones:
     matrix:
@@ -77,94 +92,135 @@ points:
 
 # Previews some stuff
 outlines:
-  raw:
-    - what: rectangle
-      where: true
-      size: [kx, ky]
   keys:
     - what: rectangle
       where: true
       size: [mx_plate_dimension,mx_plate_dimension]
-  board:
+  _case_inner:
     - what: polygon
       operation: stack
       points:
         - ref: matrix_outer_fun
-          shift: [-0.5px,0.5py]
+          shift: [-case_inner_x,case_inner_y]
         - ref: matrix_ring_fun
-          shift: [-0.5px,0.5py]
+          shift: [-case_inner_x,case_inner_y]
         - ref: matrix_middle_fun
-          shift: [-0.5px,0.5py]
+          shift: [-case_inner_x,case_inner_y]
         - ref: matrix_middle_fun
-          shift: [0.5px,0.5py]
+          shift: [case_inner_x,case_inner_y]
         - ref: matrix_inner_fun
-          shift: [0.5px,0.5py]
+          shift: [case_inner_x,case_inner_y]
         - ref: mirror_matrix_inner_fun
-          shift: [0.5px,0.5py]
+          shift: [case_inner_x,case_inner_y]
         - ref: mirror_matrix_middle_fun
-          shift: [0.5px,0.5py]
+          shift: [case_inner_x,case_inner_y]
         - ref: mirror_matrix_middle_fun
-          shift: [-0.5px,0.5py]
+          shift: [-case_inner_x,case_inner_y]
         - ref: mirror_matrix_ring_fun
-          shift: [-0.5px,0.5py]
+          shift: [-case_inner_x,case_inner_y]
         - ref: mirror_matrix_outer_fun
-          shift: [-0.5px,0.5py]
+          shift: [-case_inner_x,case_inner_y]
         - ref: mirror_matrix_outer_mod
-          shift: [-0.5px,-0.5py]
+          shift: [-case_inner_x,-case_inner_y]
         - ref: mirror_thumbs_space_cluster
-          shift: [-0.75px,-0.5py]
+          shift: [-case_inner_x,-case_inner_y]
         - ref: thumbs_space_cluster
-          shift: [-0.75px,-0.5py]
+          shift: [-case_inner_x,-case_inner_y]
         - ref: matrix_outer_mod
-          shift: [-0.5px,-0.5py]
-  xboard:
+          shift: [-case_inner_x,-case_inner_y]
+      fillet: fillet_size
+  _case_outer:
     - what: polygon
       operation: stack
       points:
         - ref: matrix_outer_fun
-          shift: [-0.5dpx,0.5dpy]
+          shift: [-case_outer_x,case_outer_y]
         - ref: matrix_ring_fun
-          shift: [-0.5dpx,0.5dpy]
+          shift: [-case_outer_x,case_outer_y]
         - ref: matrix_middle_fun
-          shift: [-0.5dpx,0.5dpy]
+          shift: [-case_outer_x,case_outer_y]
         - ref: matrix_middle_fun
-          shift: [0.5dpx,0.5dpy]
+          shift: [case_outer_x,case_outer_y]
         - ref: matrix_inner_fun
-          shift: [0.5dpx,0.5dpy]
+          shift: [case_outer_x-0.5edge_thickness,case_outer_y+0.5edge_thickness]
         - ref: mirror_matrix_inner_fun
-          shift: [0.5dpx,0.5dpy]
+          shift: [case_outer_x-0.5edge_thickness,case_outer_y+0.5edge_thickness]
         - ref: mirror_matrix_middle_fun
-          shift: [0.5dpx,0.5dpy]
+          shift: [case_outer_x,case_outer_y]
         - ref: mirror_matrix_middle_fun
-          shift: [-0.5dpx,0.5dpy]
+          shift: [-case_outer_x,case_outer_y]
         - ref: mirror_matrix_ring_fun
-          shift: [-0.5dpx,0.5dpy]
+          shift: [-case_outer_x,case_outer_y]
         - ref: mirror_matrix_outer_fun
-          shift: [-0.5dpx,0.5dpy]
+          shift: [-case_outer_x,case_outer_y]
         - ref: mirror_matrix_outer_mod
-          shift: [-0.5dpx,-0.5dpy]
+          shift: [-case_outer_x,-case_outer_y]
         - ref: mirror_thumbs_space_cluster
-          shift: [-0.75dpx,-0.5dpy]
+          shift: [-case_outer_x,-case_outer_y]
         - ref: thumbs_space_cluster
-          shift: [-0.75dpx,-0.5dpy]
+          shift: [-case_outer_x,-case_outer_y]
         - ref: matrix_outer_mod
-          shift: [-0.5dpx,-0.5dpy]
-      fillet: 2
+          shift: [-case_outer_x,-case_outer_y]
+      fillet: fillet_size
+  _plate_outline:
+    - what: polygon
+      operation: stack
+      points:
+        - ref: matrix_outer_fun
+          shift: [-plate_x,plate_y]
+        - ref: matrix_ring_fun
+          shift: [-plate_x,plate_y]
+        - ref: matrix_middle_fun
+          shift: [-plate_x,plate_y]
+        - ref: matrix_middle_fun
+          shift: [plate_x,plate_y]
+        - ref: matrix_inner_fun
+          shift: [plate_x,plate_y]
+        - ref: mirror_matrix_inner_fun
+          shift: [plate_x,plate_y]
+        - ref: mirror_matrix_middle_fun
+          shift: [plate_x,plate_y]
+        - ref: mirror_matrix_middle_fun
+          shift: [-plate_x,plate_y]
+        - ref: mirror_matrix_ring_fun
+          shift: [-plate_x,plate_y]
+        - ref: mirror_matrix_outer_fun
+          shift: [-plate_x,plate_y]
+        - ref: mirror_matrix_outer_mod
+          shift: [-plate_x,-plate_y]
+        - ref: mirror_thumbs_space_cluster
+          shift: [-plate_x,-plate_y]
+        - ref: thumbs_space_cluster
+          shift: [-plate_x,-plate_y]
+        - ref: matrix_outer_mod
+          shift: [-plate_x,-plate_y]
+      fillet: fillet_size
 
-  combo_keys:
-    - name: board
+  # These are just used to verify parameters
+  case_wall_thickness_view:
+    - name: _case_outer
+    - operation: subtract
+      name: _case_inner
+
+  plate_view:
+    - name: _plate_outline
     - operation: subtract
       name: keys
 
+  plate_vs_case_view:
+   - name: _case_inner
+   - operation: subtract
+     name: plate_view
+
 cases:
-  _xlBottom:
-    - name: xboard
+  _bottom:
+    - name: _case_outer
       extrude: base_thickness
   _outerWall:
-    - name: xboard
+    - name: _case_outer
       extrude: wall_height + base_thickness
   _innerWall:
-    - name: board
+    - name: _case_inner
       extrude: wall_height + base_thickness
   _wall:
     - what: case
@@ -174,24 +230,13 @@ cases:
       name: _innerWall
       operation: subtract
 
-  _plate_board:
-    - name: board
+  plate_board:
+    - name: plate_view
       extrude: plate_thickness
-  _plate_cut:
-    - name: keys
-      extrude: plate_thickness
-
-  plate:
-    - what: case
-      name: _plate_board
-      operation: add
-    - what: case
-      name: _plate_cut
-      operation: subtract
 
   case:
     - what: case
-      name: _xlBottom
+      name: _bottom
       operation: add
     - what: case
       name: _wall
