@@ -8,9 +8,9 @@
         "**/*.hex": true,
         "**/*.bin": true,
         "**/*.uf2": true,
-        "keyboards/[^o]*": true,
-        "keyboards/o[^o]*": true,
-        "keyboards/oo[^b]*": true
+        // "keyboards/[^o]*": true,
+        // "keyboards/o[^o]*": true,
+        // "keyboards/oo[^b]*": true
 
     },
     "files.associations": {
