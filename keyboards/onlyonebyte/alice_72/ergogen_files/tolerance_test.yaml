@@ -1,4 +1,6 @@
 # This is used to determine the spacing values
+# Use: https://ergogen.ceoloide.com/ for jscad files
+# Can use: https://neorama.de/ to go from jscad to stl
 units:
   # Proxy Spacing Variables
   kx: u
