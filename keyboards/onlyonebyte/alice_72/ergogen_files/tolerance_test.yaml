@@ -8,10 +8,14 @@ units:
   fillet_size: 5
 
   # Case dimension variables
-  edge_thickness: 4 # how much padding around the edge of the entire keyboard
+  edge_thickness: 6 # how much padding around the edge of the entire keyboard
   wall_thickness: 4
   wall_height: 16
   base_thickness: 2
+  resting_ledge: 3 # how thick of a ledge to go around the entire inside for the plate to rest on
+
+  case_ledge_x: 0.5kx + (edge_thickness - resting_ledge)
+  case_ledge_y: 0.5ky + (edge_thickness - resting_ledge)
 
   case_inner_x: 0.5kx + edge_thickness
   case_inner_y: 0.5ky + edge_thickness
@@ -28,6 +32,10 @@ units:
 
   plate_x: 0.5kx + edge_thickness - plate_to_case_pad
   plate_y: 0.5kx + edge_thickness - plate_to_case_pad
+
+  # size of screws
+  screw_diameter: 1.5
+  standoff_diameter: 5
 
 points:
   zones:
@@ -48,7 +56,19 @@ outlines:
     - what: rectangle
       where: true
       size: [mx_plate_dimension,mx_plate_dimension]
-
+  _case_ledge:
+    - what: polygon
+      operation: stack
+      points:
+        - ref: matrix_col1_row2
+          shift: [-case_ledge_x,case_ledge_y]
+        - ref: matrix_col2_row2
+          shift: [case_ledge_x,case_ledge_y]
+        - ref: matrix_col2_row1
+          shift: [case_ledge_x,-case_ledge_y]
+        - ref: matrix_col1_row1
+          shift: [-case_ledge_x,-case_ledge_y]
+      fillet: fillet_size
   _case_inner:
     - what: polygon
       operation: stack
@@ -88,43 +108,84 @@ outlines:
         - ref: matrix_col1_row1
           shift: [-plate_x,-plate_y]
       fillet: fillet_size
-
-  # These are just used to verify parameters
-  case_wall_thickness_view:
-    - name: _case_outer
+  _screw_holes:
+    - what: circle
+      radius: screw_diameter
+      where:
+        ref: [matrix_col1_row1]
+        shift: [0.5kx, 0.5ky]
+  _standoffs_outer:
+    - what: circle
+      radius: standoff_diameter
+      where:
+        ref: [matrix_col1_row1]
+        shift: [0.5kx, 0.5ky]
+  _standoffs:
+    - name: _standoffs_outer
     - operation: subtract
-      name: _case_inner
-
-  plate_view:
+      name: _screw_holes
+  _plate:
     - name: _plate_outline
     - operation: subtract
       name: keys
-
-  plate_vs_case_view:
-   - name: _case_inner
-   - operation: subtract
-     name: plate_view
+    - operation: subtract
+      name: _screw_holes
+  # These are just used to verify parameters
+  all_view:
+    - name: _case_outer
+    - operation: subtract
+      name: _case_inner
+    - operation: add
+      name: _plate
+    - operation: subtract
+      name: _screw_holes
 
 cases:
+  # making the case outline, wall and bottom
   _bottom:
     - name: _case_outer
       extrude: base_thickness
-  _outerWall:
+  _outer_wall:
     - name: _case_outer
       extrude: wall_height + base_thickness
-  _innerWall:
+  _inner_wall:
+    - name: _case_ledge
+      extrude: wall_height + base_thickness
+
+  # Making the ledge around the inside of the wall
+  # this gets complicated bc we need to make a cut out on the wall
+  _upper_ledge:
     - name: _case_inner
       extrude: wall_height + base_thickness
-  _wall:
+  _lower_ledge:
+    - name: _case_inner
+      extrude: wall_height + base_thickness - plate_thickness
+  _ledge:
     - what: case
-      name: _outerWall
+      name: _upper_ledge
       operation: add
     - what: case
-      name: _innerWall
+      name: _lower_ledge
+      operation: subtract
+  # Making wall
+  _wall:
+    - what: case
+      name: _outer_wall
+      operation: add
+    - what: case
+      name: _inner_wall
+      operation: subtract
+    - what: case
+      name: _ledge
       operation: subtract
 
+  # Making the standoffs for inside the case
+  _standoffs:
+    - name: _standoffs
+      extrude: base_thickness + wall_height - plate_thickness
+
   plate:
-    - name: plate_view
+    - name: _plate
       extrude: plate_thickness
 
   case:
@@ -133,4 +194,7 @@ cases:
       operation: add
     - what: case
       name: _wall
+      operation: add
+    - what: case
+      name: _standoffs
       operation: add
