@@ -26,6 +26,7 @@ units:
   # Plate Dimensions
   plate_thickness: 5 # 5 is max
   plate_to_case_pad: 1.5 # padding between the plate and the case
+  plate_to_case_pad_v: 0.05 # padding between the plate and the ledge/standoffs
 
   mx_plate_pad: 0.05
   mx_plate_dimension: 14 + mx_plate_pad
@@ -364,7 +365,7 @@ cases:
       extrude: wall_height + base_thickness
   _lower_ledge:
     - name: _case_inner
-      extrude: wall_height + base_thickness - plate_thickness
+      extrude: wall_height + base_thickness - plate_thickness - plate_to_case_pad_v
   _ledge:
     - what: case
       name: _upper_ledge
@@ -387,7 +388,7 @@ cases:
   # Making the standoffs for inside the case
   _standoffs:
     - name: _standoffs
-      extrude: base_thickness + wall_height - plate_thickness
+      extrude: base_thickness + wall_height - plate_thickness - plate_to_case_pad_v
 
   plate:
     - name: _plate
