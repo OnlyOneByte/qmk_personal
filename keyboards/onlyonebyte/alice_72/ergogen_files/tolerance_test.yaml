@@ -9,8 +9,8 @@ units:
 
   # Case dimension variables
   edge_thickness: 4 # how much padding around the edge of the entire keyboard
-  wall_thickness: 8
-  wall_height: 12
+  wall_thickness: 4
+  wall_height: 16
   base_thickness: 2
 
   case_inner_x: 0.5kx + edge_thickness
@@ -21,9 +21,9 @@ units:
 
   # Plate Dimensions
   plate_thickness: 5 # 5 is max
-  plate_to_case_pad: 1.5 # padding between the plate and the case
+  plate_to_case_pad: 0.5 # padding between the plate and the case
 
-  mx_plate_pad: 0.05
+  mx_plate_pad: 0.00
   mx_plate_dimension: 14 + mx_plate_pad
 
   plate_x: 0.5kx + edge_thickness - plate_to_case_pad
